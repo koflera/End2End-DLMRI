@@ -15,7 +15,7 @@ by alternating minimization. The weights of the network - i.e. the atoms of the 
 ## Citing this work
 For citing this work, please use
 
-@article{kofler2021end2end_dlmri,
+@article{kofler2022end2end_dlmri,
   title={Deep Supervised Dictionary Learning by Algorithmic Unrolling - Application to Fast 2D Dynamic {MR} Image Reconstruction},
   author={Kofler, Andreas and Pali, Marie-Christine and Schaeffter, Tobias and Kolbitsch, Christoph},
   journal={Medical Physics},
