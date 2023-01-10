@@ -2,7 +2,7 @@
 
 Here, we provide an implementation of the network described in our work
 
-"Deep Supervised Dictionary Learning by Algorithmic Unrolling - Application to Fast 2D Dynamic MR Image Reconstruction"
+"Deep Supervised Dictionary Learning by Algorithm Unrolling - Application to Fast 2D Dynamic MR Image Reconstruction"
 
 by A. Kofler, M.C. Pali, T. Schaeffter and C. Kolbitsch.
 
