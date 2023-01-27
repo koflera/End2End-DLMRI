@@ -12,6 +12,10 @@ The method is a so-called physics-informed neural network which implements an al
 
 by alternating minimization. The weights of the network - i.e. the atoms of the dictionary and the regularization parameters- can be trained in a supervised and physics-informed way.
 
+## Code
+
+A hopefully somewhat decent and clean version of the code will be released soon ;) Please forgive the time delay.
+
 ## Citing this work
 For citing this work, please use
 
