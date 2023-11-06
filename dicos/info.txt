@@ -1,0 +1,7 @@
+This folder contains different dictionaries that can be used to approximate patches of shape [dx, dy, dt]. Each dictionary is a matrix of shape d x K,
+where d = dx * dy * dt and d<K<4d. More precisely, we have three different types of dictionaries with three different overcompleteness factors, i.e.
+K=d, K=2d and K=4d. The substring "lasso" in the filename refers to dictionaries that have been pre-trained using the LASSO algorithm, see
+https://scikit-learn.org/stable/auto_examples/decomposition/plot_image_denoising.html#learn-the-dictionary-from-reference-patches
+
+The substring "nn" refers to dictionaries that have been trained by backpropagation as described in our paper for this work, i.e. by unrolling the 
+corresponding reconstruction algorithm assuming the dictionary to be fixed and using input-target image pairs.
