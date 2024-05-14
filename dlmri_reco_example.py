@@ -27,8 +27,8 @@ mask = cine_cartesian_mask(x.shape[1:], acc_factor=R).unsqueeze(0)
 # retrospectively generated undersampled k-space data and add noise
 norm = "ortho"
 y = mask * torch.fft.fftn(x, dim=(-3, -2), norm=norm)
-sigma = 0.05
-y = y + mask * sigma * y.abs().max() * torch.randn(y.shape)
+sigma = 0.2
+y = y + mask * sigma * y.abs().mean() * torch.randn(y.shape)
 
 # undersampled (zero-filled) reco
 xu = torch.fft.ifftn(y, dim=(-3, -2), norm=norm)
@@ -55,12 +55,12 @@ if torch.cuda.is_available():
     dlmri = dlmri.cuda()
     x = x.cuda()
 
-mse_list = []
-
 # reconstruct images; here, instead of performing xreco = dlmri(y, mask, x=xu),
 # we perform only one iteration at the time to be able to track the mse
-# between the iterate and the target imgage
+# between the iterates and the target imgage
 T = 16
+mse_list = []
+
 with torch.no_grad():
     xreco = xu.clone()
     mse = F.mse_loss(torch.view_as_real(x), torch.view_as_real(xreco))

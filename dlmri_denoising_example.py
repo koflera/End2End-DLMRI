@@ -4,7 +4,6 @@ import torch.nn.functional as F
 import matplotlib.pyplot as plt
 
 from networks.dlmri import DLMRI
-from utils.mask import cine_cartesian_mask
 
 # specify parameters for dictionary
 dico_type = "nn"  # or "lasso"
@@ -12,7 +11,7 @@ patches_size = (4, 1, 16)  # (4, 4, 6), (4, 1, 16) or (1, 1, 30)
 strides = (1, 1, 1)
 Kfact = 1  # 1, 2 or 4
 dx, dy, dt = patches_size
-K = int(torch.prod(torch.tensor(patches_size))
+K = int(torch.prod(torch.tensor(patches_size)))
 params = torch.load(
     "dicos/{}_d{}x{}x{}_Kfact{}.pt".format(dico_type, dx, dy, dt, Kfact)
 )
@@ -44,14 +43,16 @@ if torch.cuda.is_available():
     dlmri = dlmri.cuda()
     x = x.cuda()
 
-mse_list = []
-
 # denoise images;
 # we solve the two sub-problems to be able to track the mse between
 # the intermediate reconstructions and the target image
-T = 16
-lambda_reg = F.softplus(torch.tensor([9.0], device=x0.device))
-beta_reg = F.softplus(torch.tensor([-2.0], device=x0.device))
+T = 8
+mse_list = []
+
+# set lambda and beta by hand (can be for sure chosen more wisely; this
+# is just for show-case purposes)
+lambda_reg = F.softplus(torch.tensor([16.0], device=x0.device))  # \approx 16.
+beta_reg = F.softplus(torch.tensor([-3.0], device=x0.device))  # \approx 0.05
 with torch.no_grad():
     xreco = x0.clone()
     mse = F.mse_loss(torch.view_as_real(x), torch.view_as_real(xreco))
@@ -83,5 +84,4 @@ for i, (arr, err, title) in enumerate(zip(arrs_list, errs_list, titles_list)):
     ax[0, i].imshow(arr[0, ..., 0].abs(), clim=[0, 0.8], cmap=plt.cm.Greys_r)
     ax[1, i].imshow(3 * err[0, ..., 0].abs(), clim=[0, 0.8], cmap=plt.cm.viridis)
 plt.setp(ax, xticks=[], yticks=[])
-
 # %%
