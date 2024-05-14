@@ -13,7 +13,7 @@ class SingleCoilDC(nn.Module):
 
         kest = (
             mask * (reg_param / (1.0 + reg_param)) * kreg
-            + (1.0 / 1.0 + reg_param) * k
+            + (1.0 / (1.0 + reg_param)) * k
             + (~mask) * kreg
         )
 
