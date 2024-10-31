@@ -104,10 +104,10 @@ class DLMRI(nn.Module):
         p = torch.view_as_complex(p.contiguous())
 
         p = F.pad(p, tuple([-pad for pad in self.npad]))
-        factor = torch.prod(
-            torch.tensor(self.patches_size) - torch.tensor(self.strides)
+        factor = torch.prod(torch.tensor(self.strides)) / torch.prod(
+            torch.tensor(self.patches_size)
         )
-        return p / factor
+        return factor * p
 
     def dl_reg(self, x, reg_param, niter_fista=32, niter_pow_it=16, dico_norm=None):
         # extract patches
